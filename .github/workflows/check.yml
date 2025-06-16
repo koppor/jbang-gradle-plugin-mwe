@@ -1,0 +1,38 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout jbang-gradle-plugin
+        uses: actions/checkout@v4
+        with:
+          repository: jbangdev/jbang-gradle-plugin
+          path: jbang-gradle-plugin
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Publish plugin to Maven local
+        run: |
+          cd jbang-gradle-plugin
+          ./gradlew -Prelease=true publishToMavenLocal
+
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+        with:
+          path: current-repo
+
+      - name: Run helloworld
+        run: |
+          cd current-repo
+          ./gradlew helloworld

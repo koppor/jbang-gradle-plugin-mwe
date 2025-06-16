@@ -10,12 +10,11 @@ import dev.jbang.gradle.tasks.JBangTask
 
 plugins {
     `java-library`
-    id("dev.jbang") version '0.3.0-SNAPSHOT'
+    id("dev.jbang") version "0.3.0-SNAPSHOT"
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
